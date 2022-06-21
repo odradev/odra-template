@@ -1,19 +1,15 @@
 #[cfg(test)]
 use odra::instance::Instance;
+use odra::types::bytesrepr::Bytes;
 #[cfg(test)]
-use odra::odra_types::bytesrepr::FromBytes;
+use odra::types::bytesrepr::FromBytes;
 #[cfg(test)]
-use odra::odra_types::bytesrepr::ToBytes;
+use odra::types::bytesrepr::ToBytes;
 #[cfg(test)]
-use odra::odra_types::{Address, RuntimeArgs};
-use odra::Variable;
+use odra::types::{Address, RuntimeArgs};
+use odra::{TestEnv, Variable};
 
-#[cfg(test)]
-use odra::test_env::ContractContainer;
-#[cfg(test)]
-use odra::test_env::TestEnv;
-
-#[odra::instance]
+#[odra::contract]
 pub struct Flipper {
     value: Variable<bool>,
 }
@@ -55,7 +51,9 @@ impl FlipperRef {
 
     pub fn get(&self) -> bool {
         let raw_result = TestEnv::call_contract(&self.address, "get", &RuntimeArgs::new());
-        <bool as FromBytes>::from_vec(raw_result).unwrap().0
+        <bool as FromBytes>::from_vec(raw_result.to_vec())
+            .unwrap()
+            .0
     }
 
     pub fn cross_flip(&self, addr: Address) {
@@ -64,25 +62,29 @@ impl FlipperRef {
 
     pub fn forty_two(&self) -> u32 {
         let raw_result = TestEnv::call_contract(&self.address, "forty_two", &RuntimeArgs::new());
-        <u32 as FromBytes>::from_vec(raw_result).unwrap().0
+        <u32 as FromBytes>::from_vec(raw_result.to_vec()).unwrap().0
     }
 }
 
 #[cfg(test)]
 impl Flipper {
     fn deploy(name: &str) -> FlipperRef {
-        let mut container = ContractContainer {
+        let mut container = odra_test_env::ContractContainer {
             name: name.to_string(),
             wasm_path: "flipper.wasm".to_string(),
             entrypoints: Default::default(),
         };
         container.add("flip".to_string(), |name, _| {
             Flipper::instance(name.as_str()).flip();
-            vec![]
+            Bytes::new()
         });
 
         container.add("get".to_string(), |name, _| {
-            Flipper::instance(name.as_str()).get().to_bytes().unwrap()
+            Flipper::instance(name.as_str())
+                .get()
+                .to_bytes()
+                .unwrap()
+                .into()
         });
 
         let address = TestEnv::register_contract(&container);

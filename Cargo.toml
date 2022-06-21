@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-odra = { git = "https://github.com/odradev/odra-playground", branch = "feature/backends", default-features = false }
+odra = { git = "https://github.com/odradev/odra", branch = "master", default-features = false }
+odra-test-env = { git = "https://github.com/odradev/odra", branch = "master" }
 
 [features]
 default = ["mock-vm"]
