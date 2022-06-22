@@ -1,0 +1,3 @@
+name = "odra-template"
+[contracts]
+flipper = { path = "src/flipper.rs", name = "flipper", fqn = "Flipper::Flipper"}
