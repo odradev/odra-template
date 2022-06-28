@@ -7,6 +7,11 @@ pub struct Flipper {
 
 #[odra::contract]
 impl Flipper {
+    #[odra(init)]
+    pub fn initial_settings(&self) {
+        self.value.set(false);
+    }
+
     pub fn set(&self, value: bool) {
         self.value.set(value);
     }
@@ -27,11 +32,13 @@ impl Flipper {
 
 #[cfg(test)]
 mod tests {
+    use odra::deploy;
     use crate::flipper::Flipper;
 
     #[test]
     fn flipping() {
-        let contract = Flipper::deploy("flipper1");
+
+        let contract = deploy!(Flipper, "flipper1");
         assert!(!contract.get());
         contract.flip();
         assert!(contract.get());
@@ -39,8 +46,8 @@ mod tests {
 
     #[test]
     fn test_two_flippers() {
-        let contract1 = Flipper::deploy("flipper1");
-        let contract2 = Flipper::deploy("flipper2");
+        let contract1 = deploy!(Flipper, "flipper1");
+        let contract2 = deploy!(Flipper, "flipper2");
         assert!(!contract1.get());
         assert!(!contract2.get());
         contract1.flip();
