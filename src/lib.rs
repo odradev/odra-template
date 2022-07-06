@@ -1,2 +1,2 @@
 pub mod flipper;
-pub use flipper::Flipper;
+pub use flipper::{Flipper, FlipperRef};
