@@ -1,11 +1,11 @@
 use odra::Variable;
 
-#[odra::contract]
+#[odra::module]
 pub struct Flipper {
     value: Variable<bool>,
 }
 
-#[odra::contract]
+#[odra::module]
 impl Flipper {
     #[odra(init)]
     pub fn initial_settings(&self) {
@@ -17,12 +17,7 @@ impl Flipper {
     }
 
     pub fn flip(&self) {
-        if let Some(value) = self.value.get() {
-            self.value.set(!value);
-        } else {
-            self.value.set(true);
-        }
-        self.value.set(true);
+        self.value.set(!self.get());
     }
 
     pub fn get(&self) -> bool {
@@ -32,13 +27,11 @@ impl Flipper {
 
 #[cfg(test)]
 mod tests {
-    use odra::deploy;
     use crate::flipper::Flipper;
 
     #[test]
     fn flipping() {
-
-        let contract = deploy!(Flipper, "flipper1");
+        let contract = Flipper::deploy();
         assert!(!contract.get());
         contract.flip();
         assert!(contract.get());
@@ -46,8 +39,8 @@ mod tests {
 
     #[test]
     fn test_two_flippers() {
-        let contract1 = deploy!(Flipper, "flipper1");
-        let contract2 = deploy!(Flipper, "flipper2");
+        let contract1 = Flipper::deploy();
+        let contract2 = Flipper::deploy();
         assert!(!contract1.get());
         assert!(!contract2.get());
         contract1.flip();
