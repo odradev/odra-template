@@ -1,6 +1,7 @@
 use odra::Variable;
 
-/// A module definition. Each module struct consists Variables and Mappings or/and another modules.
+/// A module definition. Each module struct consists Variables and Mappings
+/// or/and another modules.
 #[odra::module]
 pub struct Flipper {
     /// The module itself does not store the value, it's a proxy that writes/reads value to/from the host.
