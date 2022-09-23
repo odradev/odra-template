@@ -35,4 +35,4 @@ $ cargo odra test -b casper
 
 To build or test against a specific backend, 
 you need pass a -b parameter to `cargo-odra`.
-A list of available backends can check [here](https://github.com/odradev/odra).
+A list of available backends can check [here](https://github.com/odradev/odra#backends).

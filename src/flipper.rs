@@ -46,10 +46,10 @@ mod tests {
 
     #[test]
     fn flipping() {
-        // To test a module we need to deploy it. 
-        /// To do so, Odra generate for us deploy() function.
-        // To call a constructor we don't do it directly. In this case to call..
-        //... a constructor, we would call deploy_initial_settings() function.
+        /// To test a module we need to deploy it. 
+        /// To do so, Odra generates for us deploy() function.
+        /// To call a constructor we don't do it directly. In this case to call
+        /// a constructor, we would call deploy_initial_settings() function.
         let contract = Flipper::deploy();
         assert!(!contract.get());
         contract.flip();
