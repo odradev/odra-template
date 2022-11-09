@@ -1,6 +1,5 @@
 # {{project-name}}
 
-
 ## Usage
 It's recommend to install 
 `[cargo-odra]`(https://github.com/odradev/cargo-odra) first.
@@ -30,9 +29,3 @@ you need to specify the backend passing -b argument to `cargo-odra`.
 ```
 $ cargo odra test -b casper
 ```
-
-### Backends
-
-To build or test against a specific backend, 
-you need pass a -b parameter to `cargo-odra`.
-A list of available backends can check [here](https://github.com/odradev/odra#backends).
