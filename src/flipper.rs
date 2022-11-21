@@ -19,17 +19,17 @@ impl Flipper {
     /// 
     /// Initializes the contract with the value of value.
     #[odra(init)]
-    pub fn initial_settings(&self) {
+    pub fn initial_settings(&mut self) {
         self.value.set(false);
     }
 
     /// Replaces the current value with the passed argument.
-    pub fn set(&self, value: bool) {
+    pub fn set(&mut self, value: bool) {
         self.value.set(value);
     }
 
     /// Replaces the current value with the opposite value.
-    pub fn flip(&self) {
+    pub fn flip(&mut self) {
         self.value.set(!self.get());
     }
 
@@ -42,15 +42,15 @@ impl Flipper {
 
 #[cfg(test)]
 mod tests {
-    use crate::flipper::Flipper;
+    use crate::flipper::FlipperDeployer;
 
     #[test]
     fn flipping() {
-        /// To test a module we need to deploy it. 
-        /// To do so, Odra generates for us deploy() function.
-        /// To call a constructor we don't do it directly. In this case to call
-        /// a constructor, we would call deploy_initial_settings() function.
-        let contract = Flipper::deploy();
+        // To test a module we need to deploy it. 
+        // To do so, Odra generates for us deploy() function.
+        // To call a constructor we don't do it directly. In this case to call
+        // a constructor, we would call deploy_initial_settings() function.
+        let mut contract = FlipperDeployer::initial_settings();
         assert!(!contract.get());
         contract.flip();
         assert!(contract.get());
@@ -58,8 +58,8 @@ mod tests {
 
     #[test]
     fn test_two_flippers() {
-        let contract1 = Flipper::deploy();
-        let contract2 = Flipper::deploy();
+        let mut contract1 = FlipperDeployer::initial_settings();
+        let contract2 = FlipperDeployer::initial_settings();
         assert!(!contract1.get());
         assert!(!contract2.get());
         contract1.flip();
