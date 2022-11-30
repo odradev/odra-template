@@ -2,7 +2,7 @@
 
 ## Usage
 It's recommend to install 
-`[cargo-odra]`(https://github.com/odradev/cargo-odra) first.
+[cargo-odra](https://github.com/odradev/cargo-odra) first.
 
 ### Build
 
